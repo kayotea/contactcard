@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Contact Card</title>
+        <link rel="stylesheet" type="text/css" href="contactcard.css" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            function addCard(firstname, lastname, description){
+                $('#cardbox').append('<div class="card"><h2 class="seeme center">'+firstname+' '+lastname+'</h2><p class="seeme center">Click for description!</p><p class="hiding description">'+description+'</p></div>');
+            }
+
+            $(document).ready(function(){
+                $('form').submit(function(){
+                    $(this).serialize();
+                    var firstname = $(this).find('input[name="first_name"]').val();
+                    var lastname = $(this).find('input[name="last_name"]').val();
+                    var description = $(this).find('textarea[name="description"]').val();
+                    addCard(firstname, lastname, description);
+                    return false;
+                });
+
+                $(document.body).on('click', '.card', function(){
+                    for (var i = 1; i <=3; i++){
+                        if ($(this).children(':nth-child('+i+')').hasClass('seeme')){
+                            $(this).children(':nth-child('+i+')').removeClass('seeme');
+                            $(this).children(':nth-child('+i+')').addClass('hiding');
+                        }else{
+                            $(this).children(':nth-child('+i+')').removeClass('hiding');
+                            $(this).children(':nth-child('+i+')').addClass('seeme');
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+        <body>
+        <div id="wrapper">
+            <div id="formbox">
+                <form>
+                    First Name: <input type="text" name="first_name" value="a"><br>
+                    Last Name: <input type="text" name="last_name" value="a"><br>
+                    <p>Description:</p><textarea name="description" rows="5" cols="50"></textarea>
+                    <br>
+                    <input type="submit" value="Add User">
+                </form>
+            </div>
+            <div id="cardbox">
+            </div>
+        </div> <!--end of wrapper-->
+    </body>
+</html>
